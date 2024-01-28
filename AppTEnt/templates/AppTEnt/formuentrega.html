@@ -1,0 +1,15 @@
+{% extends "AppTEnt/padre.html" %}
+
+{% block titulo %}
+
+<h1>Aca agregamos una entrega</h1>
+
+<form action="" method="POST"> {% csrf_token %}
+
+    {{mi_formu_entrega.as_p}} 
+
+    <input type="submit" value="Guardar">
+
+</form>
+
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "AppTEnt/padre.html" %}
+
+{% block titulo %} 
+
+Aca vemos los alumnos
+
+{% endblock %}
+
+{% block contenido1 %}
+
+<ol>
+
+{% for x in object_list %}
+
+<li>Nombre: {{x.nombre}} </li>
+
+{% endfor %}
+</ol>
+
+
+{% endblock %}

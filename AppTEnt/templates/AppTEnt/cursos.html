@@ -1,0 +1,22 @@
+{% extends "AppTEnt/padre.html" %}
+
+{% block titulo %} 
+
+aca va la cursgelatinada 
+
+{% endblock %}
+
+{% block contenido1 %}
+
+<ol>
+
+{% for x in Cursos %}
+
+<li>Nombre: {{x.nombre_curso}}     Comision: {{x.numero_comision}}</li>
+
+{% endfor %}
+</ol>
+<br>
+<a class="btn btn-primary" href="{% url 'nuevo_curso' %}">Crear curso nuevo</a>
+
+{% endblock %}
