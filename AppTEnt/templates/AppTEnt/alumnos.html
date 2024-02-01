@@ -1,3 +1,18 @@
 {% extends "AppTEnt/padre.html" %}
 
-{% block titulo %} la pagina de los pibe {% endblock %}
+{% block titulo %} Listado de Alumnos {% endblock %}
+
+{% block contenido1 %}
+
+<ol>
+
+{% for x in alumnos %}
+
+<li>Nombre: {{x.nombre}}     Apellido: {{x.apellido}}</li>
+
+{% endfor %}
+</ol>
+<br>
+<a class="btn btn-primary" href="{% url 'Crear Alumnos' %}">Crear Alumno nuevo</a>
+
+{% endblock %}

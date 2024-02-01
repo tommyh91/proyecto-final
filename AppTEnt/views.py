@@ -5,12 +5,16 @@ from AppTEnt.forms import *
 from django.http import HttpResponse
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def inicio(request):
 
     return render(request, "AppTEnt/inicio.html")
 
+@login_required
 def ver_alumno(request):
     
     mis_alumnos = alumno.objects.all()
@@ -20,7 +24,7 @@ def ver_alumno(request):
     return render(request, "AppTEnt/alumnos.html", info)
 
 
-
+@login_required # agrega funcionalidad a mi lista
 def ver_curso(request):
     
     mis_cursos = curso.objects.all()
@@ -29,6 +33,7 @@ def ver_curso(request):
 
     return render(request, "AppTEnt/cursos.html", info)
 
+@login_required
 def ver_entrega(request):
     
     mis_entregas = entrega.objects.all()
@@ -197,6 +202,59 @@ class eliminar_alumnos(DeleteView):
     model = alumno
     template_name = "AppTEnt/BorrarAlumnos.html"
     success_url = "/listaAlumno"
+
+
+# VISTAS REGISTER / LOGIN / LOGOUT
+
+
+def inicio_sesion(request):
+
+    if request.method == "POST":
+
+        formulario = AuthenticationForm(request, data = request.POST) #obtener la info de usuario y contra del formulario
+
+        if formulario.is_valid():
+            
+            info = formulario.cleaned_data # la info que puso el usuario se pasa a diccionario
+
+            usuario = info["username"]
+            contraseña = info["password"]
+
+            usuario_actual = authenticate(username=usuario, password=contraseña)
+
+            if usuario_actual is not None: #si el usuario actual es "algo" (encontro un usuario)
+                login (request, usuario_actual) #iniciar sesion con ese usuario
+
+                return render(request, "AppTEnt/inicio.html", {"mensaje":f"Bienvenido {usuario}"})
+        
+        """else: #el usuario es none ( no se ha encontrado usuario con los datos brindados) / no es necesario.. python lo hace solo
+                return render(request, "AppTEnt/inicio.html", {"mensaje":f"Error, datos incorrectos"})"""
+    
+    else:
+
+        formulario = AuthenticationForm()
+
+    return render(request, "registro/inicio_sesion.html", {"formu":formulario})
+
+def registro(request):
+
+    if request.method == "POST": #tengo la info
+        
+        formulario = UserCreationForm(request.POST)
+
+        if formulario.is_valid():
+            
+            info = formulario.cleaned_data
+
+            usuario = info["username"] # obtener el nombre de usuario que se registro
+
+            formulario.save() # ya te crea el usuario en la base de datos
+
+            return render(request, "AppTEnt/inicio.html", {"mensaje":f"Bienvenido {usuario}"})
+    else:
+        formulario = UserCreationForm()
+
+    return render(request, "registro/registrar_usuario.html", {"formu":formulario})
 
 
 

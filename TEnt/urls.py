@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from AppTEnt.views import *
+from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
     path('admin/', admin.site.urls, name="admin"),
@@ -47,6 +48,11 @@ urlpatterns = [
     path("ActualizarAlumno/<int:pk>", actualizar_alumnos.as_view(), name="Actualizar Alumnos"),
     path("BorrarAlumno/<int:pk>", eliminar_alumnos.as_view(), name="Eliminar Alumnos"),
 
+#URL login
+
+    path("login/", inicio_sesion, name="login"),
+    path("Signup/", registro, name="signup"),
+    path("logout/", LogoutView.as_view(template_name="registro/cerrar_sesion.html"), name = "logout")
     ]
 
 

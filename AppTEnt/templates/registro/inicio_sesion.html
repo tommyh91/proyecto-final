@@ -1,0 +1,18 @@
+{% extends "AppTEnt/padre.html" %}
+
+{% block titulo %} 
+
+Iniciar sesion
+
+{% endblock %}
+
+{% block contenido1 %}
+<form action="" method="POST">  {% csrf_token %}
+
+    {{formu.as_p}}
+
+    <input type="submit" value="Iniciar sesion">
+
+</form>
+
+{% endblock %}
