@@ -5,8 +5,8 @@ from AppTEnt.forms import *
 from django.http import HttpResponse
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.contrib.auth import login, authenticate
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
@@ -236,6 +236,12 @@ def inicio_sesion(request):
 
     return render(request, "registro/inicio_sesion.html", {"formu":formulario})
 
+
+def cerrar_sesion(request):
+    logout(request)
+    return render(request,"registro/cerrar_sesion.html")
+
+
 def registro(request):
 
     if request.method == "POST": #tengo la info
@@ -255,6 +261,32 @@ def registro(request):
         formulario = UserCreationForm()
 
     return render(request, "registro/registrar_usuario.html", {"formu":formulario})
+
+def editar_perfil(request):
+
+    usuario_actual = request.user
+
+    if request.method == "POST": #tengo la info
+        
+        formulario = UserCreationForm(request.POST)
+
+        if formulario.is_valid():
+            
+            info = formulario.cleaned_data
+
+            usuario_actual = info # obtener el nombre de usuario que se registro
+
+            formulario.save() # ya te crea el usuario en la base de datos
+
+            return render(request, "AppTEnt/inicio.html", {"mensaje":f"Bienvenido {usuario_actual}"})
+    else:
+        formulario = UserCreationForm()
+
+    return render(request, "registro/update_usuario.html", {"formu":formulario})
+
+
+
+
 
 
 

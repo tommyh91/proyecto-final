@@ -17,6 +17,11 @@ class EntregaFormulario(forms.Form):
     nombre_proyecto = forms.CharField(max_length=50)
     fecha_entrega = forms.DateField()
 
+
+
+
+
+
 # TODO ESTO DE ABAJO SI QUISIERA ELEGIR LOS CAMPOS A CREAR
 """
 class Registrarusuario(UserCreationForm):

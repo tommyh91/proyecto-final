@@ -17,6 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from AppTEnt.views import *
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
@@ -29,10 +31,10 @@ urlpatterns = [
     #URLs forms
     path("nuevo_alumno", agregar_alumno),
     path("nuevo_curso", agregar_curso, name="nuevo_curso"),
-    path("nueva_entrega", agregar_entrega),
+    path("nueva_entrega", agregar_entrega, name="nueva_entrega"),
 
-    #URLs buscar pelis
-    path("buscar_añoalumno", busqueda_alumnoxaño),
+    #URLs buscar Alumnos
+    path("buscar_añoalumno", busqueda_alumnoxaño, name="buscar_alumno"),
     path("resultadoalumno/", resultado_buscar_alumno_por_año),
 
 
@@ -52,9 +54,12 @@ urlpatterns = [
 
     path("login/", inicio_sesion, name="login"),
     path("Signup/", registro, name="signup"),
-    path("logout/", LogoutView.as_view(template_name="registro/cerrar_sesion.html"), name = "logout")
+    path("logout/", cerrar_sesion, name = "logout"),
+    path("update/", editar_perfil, name= "update"),
     ]
 
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
 

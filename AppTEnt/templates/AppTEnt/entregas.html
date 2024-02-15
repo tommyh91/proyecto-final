@@ -1,3 +1,18 @@
 {% extends "AppTEnt/padre.html" %}
 
 {% block titulo %} Trabajos practicos {% endblock %}
+
+{% block contenido1 %}
+
+<ol>
+
+{% for x in Entregas %}
+
+<li>Nombre: {{x.nombre_proyecto}} --- Fecha: {{x.fecha_entrega}}</li>
+
+{% endfor %}
+</ol>
+<br>
+<a class="btn btn-primary" href="{% url 'nueva_entrega' %}">Crear TP nuevo</a>
+
+{% endblock %}

@@ -8,3 +8,5 @@ admin.site.register(alumno)
 admin.site.register(curso)
 
 admin.site.register(entrega)
+
+admin.site.register(Avatar)

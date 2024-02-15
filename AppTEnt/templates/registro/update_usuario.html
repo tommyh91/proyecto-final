@@ -2,16 +2,16 @@
 
 {% block titulo %} 
 
-Por favor inicie sesion
+Actualizar Usuario
 
 {% endblock %}
 
 {% block contenido1 %}
 <form action="" method="POST">  {% csrf_token %}
 
-    {{formu.as_p}}
+    {{formu}}
 
-    <input type="submit" value="Iniciar sesion">
+    <input type="submit" value="Registrarse">
 
 </form>
 
